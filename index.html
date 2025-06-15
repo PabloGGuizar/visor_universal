@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Visor de Aplicaciones de Google Drive</title>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: sans-serif; }
+        .container { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background-color: #f0f2f5; }
+        .message { text-align: center; padding: 40px; background-color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        p { color: #666; }
+        iframe { width: 100%; height: 100%; border: none; display: none; } /* Oculto por defecto */
+    </style>
+</head>
+<body>
+
+    <iframe id="viewerFrame"></iframe>
+
+    <div id="messageContainer" class="container">
+        <div class="message">
+            <h1 id="messageTitle">Cargando aplicación...</h1>
+            <p id="messageText">Por favor, espera un momento.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURACIÓN ---
+        // ¡MUY IMPORTANTE! Reemplaza esto con la URL de tu API de Apps Script.
+        const APPS_SCRIPT_URL = 'URL_DE_TU_API_AQUI';
+
+        // --- LÓGICA PRINCIPAL ---
+        window.onload = function() {
+            // 1. Obtener el ID de la carpeta desde el hash de la URL (lo que va después del #)
+            const folderId = window.location.hash.substring(1);
+
+            const messageContainer = document.getElementById('messageContainer');
+            const messageTitle = document.getElementById('messageTitle');
+            const messageText = document.getElementById('messageText');
+            const viewerFrame = document.getElementById('viewerFrame');
+
+            if (!folderId) {
+                messageTitle.textContent = 'Bienvenido al Visor';
+                messageText.innerHTML = 'Para usar, añade el ID de una carpeta de Google Drive a la URL después de un #.<br>Ejemplo: <strong>.../visor/#ID_DE_LA_CARPETA</strong>';
+                return;
+            }
+
+            if (APPS_SCRIPT_URL === 'URL_DE_TU_API_AQUI') {
+                messageTitle.textContent = 'Error de Configuración';
+                messageText.textContent = 'El desarrollador de este visor necesita configurar la URL de la API de Google Apps Script.';
+                return;
+            }
+
+            // 2. Llamar a la API de Apps Script
+            const fetchUrl = `${APPS_SCRIPT_URL}?folderId=${folderId}`;
+            
+            fetch(fetchUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+
+                    // 3. Construir el documento HTML para el iframe
+                    const htmlContent = data['index.html'] || '';
+                    const cssContent = data['styles.css'] || data['style.css'] || '';
+                    const jsContent = data['app.js'] || data['script.js'] || '';
+
+                    const srcDocContent = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>${cssContent}</style>
+                        </head>
+                        <body>
+                            ${htmlContent}
+                            <script>${jsContent}<\/script>
+                        </body>
+                        </html>
+                    `;
+
+                    // 4. Mostrar el iframe y ocultar el mensaje
+                    viewerFrame.srcdoc = srcDocContent;
+                    viewerFrame.style.display = 'block';
+                    messageContainer.style.display = 'none';
+                })
+                .catch(error => {
+                    messageTitle.textContent = 'Error al Cargar';
+                    messageText.textContent = `No se pudo cargar la aplicación. Razón: ${error.message}`;
+                    console.error('Error:', error);
+                });
+        };
+    </script>
+
+</body>
+</html>
