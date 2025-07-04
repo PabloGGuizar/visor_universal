@@ -167,3 +167,11 @@ Esta es la página pública que interpretará tus aplicaciones. La alojaremos en
     **Ejemplo:** `https://tu-usuario.github.io/visor-drive/#1Abc-lKzYv5X0T8s19GABC-DEF123456`
 
 Este es el enlace que puedes usar y compartir. Cualquiera que lo abra verá la aplicación contenida en esa carpeta de Drive.
+
+---
+
+Este script se distribuye bajo la licencia [Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+
+**Atribución:** Este script fue generado en un entorno colaborativo con la asistencia de Gemini, un LLM de Google.
