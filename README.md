@@ -170,6 +170,6 @@ Este es el enlace que puedes usar y compartir. Cualquiera que lo abra verá la a
 
 ---
 
-Este proyecti se distribuye bajo la licencia [Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+Este proyecti se distribuye bajo la licencia [Creative Commons Atribución 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 **Atribución:** Este script fue generado en un entorno colaborativo con la asistencia de Gemini, un LLM de Google.
